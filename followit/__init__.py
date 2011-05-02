@@ -2,11 +2,11 @@
 follow instances of any other django models, including other users
 
 To use this module:
-* add "follower" to the ``INSTALLED_APPS`` in your ``settings.py``
+* add "followit" to the ``INSTALLED_APPS`` in your ``settings.py``
 * in your app's ``models.py`` add:
 
-    import follower
-    follower.register(Thing)
+    import followit
+    followit.register(Thing)
 
 * run ``python manage.py syncdb``
 * then anywhere in your code you can do the following:
@@ -18,6 +18,7 @@ To use this module:
     some_thing.get_followers()
 
 Copyright 2011 Evgeny Fadeev evgeny.fadeev@gmail.com
+The source code is available under BSD license.
 """
 from django.contrib.auth.models import User
 from django.db.models.fields.related import ForeignKey
@@ -38,7 +39,7 @@ def get_bridge_model_for_object(obj):
     """
     bridge_model_name = get_bridge_class_name(obj.__class__)
     from django.db import models as django_models
-    return django_models.get_model('follower', bridge_model_name)
+    return django_models.get_model('followit', bridge_model_name)
 
 
 def get_object_followers(obj):
@@ -56,7 +57,7 @@ def make_followed_objects_getter(model):
 
     #something like followX_set__user
     def followed_objects_getter(user):
-        filter = {'follower_records__follower': user}
+        filter = {'followit_records__follower': user}
         return model.objects.filter(**filter)
 
     return followed_objects_getter
@@ -100,7 +101,7 @@ def register(model):
     Note, that proper pluralization of the model name is not supported,
     just "s" is added
     """
-    from follower import models as follower_models
+    from followit import models as followit_models
     from django.db import models as django_models
 
     model_name = get_model_name(model)
@@ -120,7 +121,7 @@ def register(model):
                                 model,
                                 related_name = 'follower_records'
                             ),
-        '__module__': follower_models.__name__,
+        '__module__': followit_models.__name__,
         'Meta': Meta
     }
 
@@ -128,7 +129,7 @@ def register(model):
     #create the bridge model class
     bridge_class_name = get_bridge_class_name(model)
     bridge_model = type(bridge_class_name, (django_models.Model,), fields)
-    setattr(follower_models, bridge_class_name, bridge_model)
+    setattr(followit_models, bridge_class_name, bridge_model)
 
     #2) patch ``model`` with method ``get_followers()``
     model.add_to_class('get_followers', get_object_followers)
