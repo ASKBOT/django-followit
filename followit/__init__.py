@@ -57,7 +57,7 @@ def make_followed_objects_getter(model):
 
     #something like followX_set__user
     def followed_objects_getter(user):
-        filter = {'followit_records__follower': user}
+        filter = {'follower_records__follower': user}
         return model.objects.filter(**filter)
 
     return followed_objects_getter
@@ -110,7 +110,7 @@ def register(model):
 
     #1) - create a new class FollowX
     class Meta(object):
-        app_label = 'follower'
+        app_label = 'followit'
 
     fields = {
         'follower': ForeignKey(
