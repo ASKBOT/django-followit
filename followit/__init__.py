@@ -33,14 +33,18 @@ def get_bridge_class_name(model):
     return 'Follow' + get_model_name(model)
 
 
+def get_model(model_name):
+    """gets model from the current app"""
+    from django.db import models as django_models
+    return django_models.get_model('followit', model_name)
+
+
 def get_bridge_model_for_object(obj):
     """returns bridge model used to follow items
     like the ``obj``
     """
     bridge_model_name = get_bridge_class_name(obj.__class__)
-    from django.db import models as django_models
-    return django_models.get_model('followit', bridge_model_name)
-
+    return get_model(bridge_model_name)
 
 def get_object_followers(obj):
     """returns query set of users following the object"""
