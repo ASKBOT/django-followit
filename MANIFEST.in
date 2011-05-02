@@ -1,0 +1,14 @@
+include ez_setup.py
+include tox.ini
+recursive-include followit *
+recursive-exclude followit *.pyc
+recursive-exclude .git
+prune dist
+prune build
+global exclude *.pyc
+exclude settings.py
+exclude manage.py
+exclude __init__.py
+exclude urls.py
+recursive-exclude env
+recursive-exclude .tox
