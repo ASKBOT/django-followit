@@ -6,6 +6,7 @@ DATABASE_NAME = os.path.join(DIRNAME, 'database.db')
 
 INSTALLED_APPS = (
     'django.contrib.auth',
-    #'followit',
-    #'followit.tests'
+    'django.contrib.contenttypes',
+    'followit',
+    'followit.tests'
 )

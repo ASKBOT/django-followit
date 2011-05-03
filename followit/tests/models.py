@@ -9,4 +9,3 @@ class SomeTrash(models.Model):
 import followit
 followit.register(SomeJunk)
 followit.register(SomeTrash)
-
