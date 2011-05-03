@@ -47,7 +47,7 @@ def get_object_followers(obj):
     """returns query set of users following the object"""
     bridge_lookup_field = get_bridge_class_name(obj.__class__).lower()
     obj_model_name = get_model_name(obj.__class__)
-    filter_criterion = 'followed_' + obj_model_name + '_records__followed'
+    filter_criterion = 'followed_' + obj_model_name + '_records__object'
     filter = {filter_criterion: obj}
     from django.contrib.auth.models import User
     return User.objects.filter(**filter)
@@ -59,7 +59,7 @@ def make_followed_objects_getter(model):
 
     #something like followX_set__user
     def followed_objects_getter(user):
-        filter = {'follower_records__follower': user}
+        filter = {'follower_records__user': user}
         return model.objects.filter(**filter)
 
     return followed_objects_getter
@@ -72,7 +72,9 @@ def make_follow_method(model):
     def follow_method(user, obj):
         """returns ``True`` if follow operation created a new record"""
         bridge_model = get_bridge_model_for_object(obj)
-        bridge, created = bridge_model.objects.get_or_create(follower = user, followed = obj)
+        bridge, created = bridge_model.objects.get_or_create(
+                                                    user = user,
+                                                    object = obj)
         return created
     return follow_method
 
@@ -85,7 +87,7 @@ def make_unfollow_method(model):
         exstence checking
         """
         bridge_model = get_bridge_model_for_object(obj)
-        objects = bridge_model.objects.get(follower = user, followed = obj)
+        objects = bridge_model.objects.get(user = user, object = obj)
         objects.delete()
     return unfollow_method
 
@@ -117,11 +119,11 @@ def register(model):
         app_label = 'followit'
 
     fields = {
-        'follower': ForeignKey(
+        'user': ForeignKey(
                         User,
                         related_name = 'followed_' + model_name + '_records'
                     ),
-        'followed': ForeignKey(
+        'object': ForeignKey(
                                 model,
                                 related_name = 'follower_records'
                             ),
