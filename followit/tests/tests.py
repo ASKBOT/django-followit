@@ -12,8 +12,6 @@ class FollowerTests(TestCase):
 
     def test_multiple_follow(self):
         
-        import pdb
-        pdb.set_trace()
         self.u1.follow_user(self.u2)
         self.u1.follow_user(self.u3)
         self.u2.follow_user(self.u1)
