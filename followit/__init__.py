@@ -64,6 +64,19 @@ def make_followed_objects_getter(model):
 
     return followed_objects_getter
 
+def test_follow_method(user, obj):
+    """True if object ``obj`` is followed by the user,
+    false otherwise, no error checking on whether the model
+    has or has not been registered with the ``followit`` app
+    """
+    bridge_model = get_bridge_model_for_object(obj)
+    try:
+        #in django 1.2 there is method ``exists()``
+        bridge_model.objects.get(user = user, object = obj)
+        return True
+    except bridge_model.DoesNotExist:
+        return False
+
 
 def make_follow_method(model):
     """returns a method that adds a FollowX record
@@ -101,6 +114,7 @@ def register(model):
     The ``model`` class gets new method - ``get_followers``
     and the User class - a method - ``get_followed_Xs``, where
     the ``X`` is the name of the model
+    and ``is_following(something)``
     
     Note, that proper pluralization of the model name is not supported,
     just "s" is added
@@ -145,10 +159,14 @@ def register(model):
     getter_method = make_followed_objects_getter(model)
     User.add_to_class(method_name, getter_method)
 
-    #4) patch ``User`` with method ``follow_X``
+    #4) patch ``User with method ``is_following()``
+    if not hasattr(User, 'is_following'):
+        User.add_to_class('is_following', test_follow_method)
+
+    #5) patch ``User`` with method ``follow_X``
     follow_method = make_follow_method(model)
     User.add_to_class('follow_' + model_name, follow_method)
 
-    #5) patch ``User`` with method ``unfollow_X``
+    #6) patch ``User`` with method ``unfollow_X``
     unfollow_method = make_unfollow_method(model)
     User.add_to_class('unfollow_' + model_name, unfollow_method)

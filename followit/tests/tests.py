@@ -35,3 +35,8 @@ class FollowerTests(TestCase):
         self.u1.follow_user(self.u2)
         self.u1.unfollow_user(self.u2)
         self.assertEquals(self.u1.get_followed_users().count(), 0)
+
+    def test_is_following(self):
+        self.u2.follow_user(self.u1)
+        self.assertTrue(self.u2.is_following(self.u1))
+        self.assertFalse(self.u1.is_following(self.u2))
