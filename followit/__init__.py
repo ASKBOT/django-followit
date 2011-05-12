@@ -20,7 +20,7 @@ To use this module:
 Copyright 2011 Evgeny Fadeev evgeny.fadeev@gmail.com
 The source code is available under BSD license.
 """
-REGISTRY = []
+REGISTRY = {}
 
 def get_model_name(model):
     return model._meta.module_name
@@ -127,7 +127,7 @@ def register(model):
     model_name = get_model_name(model)
     if model in REGISTRY:
         return
-    REGISTRY.append(model_name)
+    REGISTRY[model_name] = model
 
     #1) - create a new class FollowX
     class Meta(object):

@@ -7,7 +7,7 @@ import followit
 
 def get_object(model_name, object_id):
     """not a view, just a function, returning an object"""
-    model = followit.get_model('Follow' + model_name)
+    model = followit.REGISTRY[model_name]
     return model.objects.get(id = object_id)
 
 def followit_ajax_view(view_func):
