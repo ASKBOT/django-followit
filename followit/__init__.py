@@ -127,6 +127,7 @@ def register(model):
     model_name = get_model_name(model)
     if model in REGISTRY:
         return
+    REGISTRY.append(model_name)
 
     #1) - create a new class FollowX
     class Meta(object):
