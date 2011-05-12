@@ -3,12 +3,12 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('',
     url(
         r'^follow/(?P<model>\w+)/(?P<id>\d+)/$',
-        'followit.views.follow',
+        'followit.views.follow_object',
         name = 'follow_object'
     ),
     url(
         r'^unfollow/(?P<model>\w+)/(?P<id>\d+)/$',
-        'followit.views.unfollow',
+        'followit.views.unfollow_object',
         name = 'unfollow_object'
     )
 )
