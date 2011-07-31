@@ -4,8 +4,8 @@ from setuptools import setup, find_packages
 import sys
 
 setup(
-    name = "followit",
-    version = '0.0.1',
+    name = "django-followit",
+    version = '0.0.3',
     description = 'A Django application that allows users to follow django model objects',
     packages = find_packages(),
     author = 'Evgeny.Fadeev',
