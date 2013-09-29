@@ -120,7 +120,13 @@ def register(model):
     just "s" is added
     """
     from followit import models as followit_models
-    from django.db import models as django_models
+    #from django.db import models as django_models
+    try:
+        from django.contrib.auth import get_user_model
+    except ImportError: # django < 1.5
+        from django.contrib.auth.models import User
+    else:
+        User = get_user_model()
     from django.db.models.fields.related import ForeignKey
     from django.contrib.auth.models import User
 
