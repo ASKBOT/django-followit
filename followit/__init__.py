@@ -49,7 +49,12 @@ def get_object_followers(obj):
     obj_model_name = get_model_name(obj.__class__)
     filter_criterion = 'followed_' + obj_model_name + '_records__object'
     filter = {filter_criterion: obj}
-    from django.contrib.auth.models import User
+    try:
+        from django.contrib.auth import get_user_model
+    except ImportError: # django < 1.5
+        from django.contrib.auth.models import User
+    else:
+        User = get_user_model()
     return User.objects.filter(**filter)
 
 
@@ -120,7 +125,7 @@ def register(model):
     just "s" is added
     """
     from followit import models as followit_models
-    #from django.db import models as django_models
+    from django.db import models as django_models
     try:
         from django.contrib.auth import get_user_model
     except ImportError: # django < 1.5
@@ -128,7 +133,6 @@ def register(model):
     else:
         User = get_user_model()
     from django.db.models.fields.related import ForeignKey
-    from django.contrib.auth.models import User
 
     model_name = get_model_name(model)
     if model in REGISTRY:
