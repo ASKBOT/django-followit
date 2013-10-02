@@ -38,3 +38,12 @@ def post_only(view_func):
         return view_func(request, *args, **kwargs)
     return wrapped_view
 
+def get_user_model():
+    """version-independent function "get_user_model" """
+    try:
+        from django.contrib.auth import get_user_model
+    except ImportError: # django < 1.5
+        from django.contrib.auth.models import User
+    else:
+        User = get_user_model()
+    return User    
