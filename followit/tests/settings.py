@@ -1,8 +1,17 @@
-import os
+import random
+import string
 
-DIRNAME = os.path.dirname(__file__)
-DATABASE_ENGINE = 'sqlite3'
-DATABASE_NAME = os.path.join(DIRNAME, 'database.db')
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+        'TEST_NAME': ':memory:',
+    },
+}
+
+SECRET_KEY = ''.join([random.choice(string.ascii_letters) for x in range(40)])
+
+TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
