@@ -1,0 +1,1 @@
+<img alt="https://travis-ci.org/vinodpandey/django-followit.png?branch=master" src="https://travis-ci.org/vinodpandey/django-followit.png?branch=master" style="max-width:100%;">
