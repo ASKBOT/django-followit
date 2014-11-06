@@ -1,8 +1,13 @@
 import os
 
 DIRNAME = os.path.dirname(__file__)
-DATABASE_ENGINE = 'sqlite3'
-DATABASE_NAME = os.path.join(DIRNAME, 'database.db')
+
+DATABASES = {
+    'default': {
+        'ENGINE' : 'django.db.backends.sqlite3',
+        'NAME' : ':memory:',
+    }
+}
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -10,3 +15,5 @@ INSTALLED_APPS = (
     'followit',
     'followit.tests'
 )
+
+SECRET_KEY = '1234567890'
