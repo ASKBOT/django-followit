@@ -5,7 +5,7 @@ import sys
 
 setup(
     name = "django-followit",
-    version = '0.0.3',
+    version = '0.0.4',
     description = 'A Django application that allows users to follow django model objects',
     packages = find_packages(),
     author = 'Evgeny.Fadeev',
@@ -35,13 +35,11 @@ Setup
 ========
 
 To the INSTALLED_APPS in your ``settings.py`` add entry ``'followit'``.
-Then, in your apps' ``models.py``, probably at the end of the file, add:
-
+Then, in your apps' ``models.py``, probably at the end of the file, add::
     import followit
     followit.register(Thing)
 
-Once that is done, in your shell run:
-
+Once that is done, in your shell run::
     python manage.py syncdb
 
 Not it will be possible for the user to follow instances of ``SomeModel``.
@@ -53,8 +51,7 @@ Usage
 ============
 
 Examples below show how to use ``followit`` (assuming that model ``Thing``
-is registered with ``followit`` in your ``models.py``.
-
+is registered with ``followit`` in your ``models.py``::
     bob.follow_thing(x)
     bob.unfollow_thing(x)
     things = bob.get_followed_things()
