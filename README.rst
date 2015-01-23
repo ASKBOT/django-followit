@@ -34,11 +34,12 @@ is registered with ``followit`` in your ``models.py``::
 
 Available urls from the `followit/urls.py`::
     /follow/<model_name>/<item_id>/
+
     {% url follow_object "SomeModel" item_id %}
 
     /unfollow/<model_name>/<item_id>/
+
     {% url unfollow_object "SomeModel" item_id %}
 
 
 ``followit`` does not yet provide template tags.
-"""
