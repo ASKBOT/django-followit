@@ -35,11 +35,14 @@ is registered with ``followit`` in your ``models.py``::
 Available urls from the `followit/urls.py`::
     /follow/<model_name>/<item_id>/
 
-    {% url follow_object "SomeModel" item_id %}
+    {% url follow_object "somemodel" item_id %} #model name lower case
 
     /unfollow/<model_name>/<item_id>/
 
-    {% url unfollow_object "SomeModel" item_id %}
+    {% url unfollow_object "somemodel" item_id %} #lower case model name
 
+    /follow-toggle/<model_name>/<item_id>/
+
+    {% url toggle_follow_object "somemodel" item_id %} #lower case model name
 
 ``followit`` does not yet provide template tags.
