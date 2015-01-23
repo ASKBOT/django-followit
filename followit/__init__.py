@@ -20,6 +20,8 @@ To use this module:
 Copyright 2011 Evgeny Fadeev evgeny.fadeev@gmail.com
 The source code is available under BSD license.
 """
+from followit import utils
+
 REGISTRY = {}
 
 def get_model_name(model):
@@ -49,7 +51,7 @@ def get_object_followers(obj):
     obj_model_name = get_model_name(obj.__class__)
     filter_criterion = 'followed_' + obj_model_name + '_records__object'
     filter = {filter_criterion: obj}
-    from django.contrib.auth.models import User
+    from followit.compat import User
     return User.objects.filter(**filter)
 
 
@@ -121,14 +123,8 @@ def register(model):
     """
     from followit import models as followit_models
     from django.db import models as django_models
-    try:
-        from django.contrib.auth import get_user_model
-    except ImportError: # django < 1.5
-        from django.contrib.auth.models import User
-    else:
-        User = get_user_model()
     from django.db.models.fields.related import ForeignKey
-    from django.contrib.auth.models import User
+    from followit.compat import User
 
     model_name = get_model_name(model)
     if model in REGISTRY:

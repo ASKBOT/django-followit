@@ -2,7 +2,7 @@
 Test cases for the follower module
 """
 from django.test import TestCase
-from django.contrib.auth.models import User
+from followit.compat import User
 
 class FollowerTests(TestCase):
     def setUp(self):
