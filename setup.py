@@ -57,9 +57,6 @@ is registered with ``followit`` in your ``models.py``::
     things = bob.get_followed_things()
     x_followers = x.get_followers()
 
-Note that ``followit`` does not yet provide view functions of url routing
-relevant to following or unfollowing items, nor template tags.
-
 Available urls from the `followit/urls.py`::
     /follow/<model_name>/<item_id>/
     {% url follow_object "SomeModel" item_id %}
