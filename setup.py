@@ -59,5 +59,15 @@ is registered with ``followit`` in your ``models.py``::
 
 Note that ``followit`` does not yet provide view functions of url routing
 relevant to following or unfollowing items, nor template tags.
+
+Available urls from the `followit/urls.py`::
+    /follow/<model_name>/<item_id>/
+    {% url follow_object "SomeModel" item_id %}
+
+    /unfollow/<model_name>/<item_id>/
+    {% url unfollow_object "SomeModel" item_id %}
+
+
+``followit`` does not yet provide template tags.
 """
 )
