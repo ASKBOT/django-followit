@@ -41,7 +41,7 @@ Available urls from the `followit/urls.py`::
 
     {% url unfollow_object "somemodel" item_id %} #lower case model name
 
-    /follow-toggle/<model_name>/<item_id>/
+    /toggle-follow/<model_name>/<item_id>/
 
     {% url toggle_follow_object "somemodel" item_id %} #lower case model name
 
