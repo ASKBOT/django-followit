@@ -137,13 +137,13 @@ def register(model):
 
     fields = {
         'user': ForeignKey(
-                        User,
-                        related_name = 'followed_' + model_name + '_records'
-                    ),
+                    User,
+                    related_name='followed_' + model_name + '_records'
+                ),
         'object': ForeignKey(
-                                model,
-                                related_name = 'follower_records'
-                            ),
+                    model,
+                    related_name='follower_records'
+                ),
         '__module__': followit_models.__name__,
         'Meta': Meta
     }
@@ -173,3 +173,7 @@ def register(model):
     #6) patch ``User`` with method ``unfollow_X``
     unfollow_method = make_unfollow_method(model)
     User.add_to_class('unfollow_' + model_name, unfollow_method)
+
+    #7) reset related objects cache
+    utils.del_related_objects_cache(User)
+    utils.del_related_objects_cache(model)

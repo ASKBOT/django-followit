@@ -5,7 +5,7 @@ import sys
 
 setup(
     name = "django-followit",
-    version = '0.0.6',
+    version = '0.0.7',
     description = 'A Django application that allows users to follow django model objects',
     packages = find_packages(),
     author = 'Evgeny.Fadeev',

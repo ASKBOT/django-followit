@@ -10,6 +10,16 @@ def get_object(model_name, object_id):
     model = followit.REGISTRY[model_name]
     return model.objects.get(id = object_id)
 
+def del_related_objects_cache(model):
+    try:
+        del model._meta._related_objects_cache
+    except AttributeError:
+        pass
+    try:
+        del model._meta._related_objects_proxy_cache
+    except AttributeError:
+        pass
+
 def followit_ajax_view(view_func):
     """decorator that does certain error checks on the input
     and serializes response as json
