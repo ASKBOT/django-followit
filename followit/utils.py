@@ -1,7 +1,7 @@
 """utility functions used by the :mod:`followit`
 """
 import functools
-from django.utils import simplejson
+import simplejson
 from django.http import HttpResponse
 import followit
 

@@ -2,10 +2,11 @@
 Test cases for the follower module
 """
 from django.test import TestCase
-from followit.compat import User
+from followit.compat import get_user_model
 
 class FollowerTests(TestCase):
     def setUp(self):
+        User = get_user_model()
         self.u1 = User.objects.create_user('user1', 'user1@example.com')
         self.u2 = User.objects.create_user('user2', 'user2@example.com')
         self.u3 = User.objects.create_user('user3', 'user3@example.com')

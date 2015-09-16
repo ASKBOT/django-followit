@@ -4,17 +4,18 @@ from setuptools import setup, find_packages
 import sys
 
 setup(
-    name = "django-followit",
-    version = '0.0.7',
-    description = 'A Django application that allows users to follow django model objects',
-    packages = find_packages(),
-    author = 'Evgeny.Fadeev',
-    author_email = 'evgeny.fadeev@gmail.com',
-    license = 'BSD License',
-    keywords = 'follow, database, django',
-    url = 'https://github.com/ASKBOT/django-followit',
-    include_package_data = True,
-    classifiers = [
+    name="django-followit",
+    version='0.0.8',
+    description='A Django application that allows users to follow django model objects',
+    packages=find_packages(),
+    author='Evgeny.Fadeev',
+    author_email='evgeny.fadeev@gmail.com',
+    license='BSD License',
+    keywords='follow, database, django',
+    url='https://github.com/ASKBOT/django-followit',
+    include_package_data=True,
+    install_requires=['simplejson',],
+    classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Framework :: Django',
@@ -27,7 +28,7 @@ setup(
         'Programming Language :: JavaScript',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
     ],
-    long_description = """The ``followit`` django app allows to easily set up a
+    long_description="""The ``followit`` django app allows to easily set up a
 capability for the site users to follow various things on the site,
 represented by django model objects.
 
