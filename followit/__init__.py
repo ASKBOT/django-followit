@@ -22,6 +22,7 @@ The source code is available under BSD license.
 """
 from followit import utils
 from followit.compat import get_user_model
+from django.contrib.contenttypes.models import ContentType
 
 REGISTRY = {}
 
@@ -29,31 +30,23 @@ def get_model_name(model):
     return model._meta.module_name
 
 
-def get_bridge_class_name(model):
-    return 'Follow' + get_model_name(model)
-
-
-def get_model(model_name):
-    """gets model from the current app"""
-    from django.db import models as django_models
-    return django_models.get_model('followit', model_name)
-
-
-def get_bridge_model_for_object(obj):
-    """returns bridge model used to follow items
-    like the ``obj``
-    """
-    bridge_model_name = get_bridge_class_name(obj.__class__)
-    return get_model(bridge_model_name)
+def get_follow_records(user, obj):
+    from followit.models import FollowRecord
+    ct = ContentType.objects.get_for_model(obj)
+    return FollowRecord.objects.filter(
+                                content_type=ct,
+                                object_id=obj.pk,
+                                user=user
+                            )
 
 def get_object_followers(obj):
     """returns query set of users following the object"""
-    bridge_lookup_field = get_bridge_class_name(obj.__class__).lower()
-    obj_model_name = get_model_name(obj.__class__)
-    filter_criterion = 'followed_' + obj_model_name + '_records__object'
-    filter = {filter_criterion: obj}
+    from followit.models import FollowRecord
+    ct = ContentType.objects.get_for_model(obj)
+    fr_set = FollowRecord.objects.filter(content_type=ct, object_id=obj.pk)
+    uids = fr_set.values_list('user', flat=True)
     User = get_user_model()
-    return User.objects.filter(**filter)
+    return User.objects.filter(pk__in=uids)
 
 
 def make_followed_objects_getter(model):
@@ -62,8 +55,15 @@ def make_followed_objects_getter(model):
 
     #something like followX_set__user
     def followed_objects_getter(user):
-        filter = {'follower_records__user': user}
-        return model.objects.filter(**filter)
+        from followit.models import FollowRecord
+        ct = ContentType.objects.get_for_model(model)
+        fr_set = FollowRecord.objects.filter(
+                                content_type=ct,
+                                user=user
+                            )
+        obj_id_set = fr_set.values_list('object_id', flat=True)
+        return model.objects.filter(pk__in=obj_id_set)
+
 
     return followed_objects_getter
 
@@ -72,13 +72,8 @@ def test_follow_method(user, obj):
     false otherwise, no error checking on whether the model
     has or has not been registered with the ``followit`` app
     """
-    bridge_model = get_bridge_model_for_object(obj)
-    try:
-        #in django 1.2 there is method ``exists()``
-        bridge_model.objects.get(user = user, object = obj)
-        return True
-    except bridge_model.DoesNotExist:
-        return False
+    fr_set = get_follow_records(user, obj)
+    return fr_set.exists()
 
 
 def make_follow_method(model):
@@ -87,10 +82,13 @@ def make_follow_method(model):
     """
     def follow_method(user, obj):
         """returns ``True`` if follow operation created a new record"""
-        bridge_model = get_bridge_model_for_object(obj)
-        bridge, created = bridge_model.objects.get_or_create(
-                                                    user = user,
-                                                    object = obj)
+        from followit.models import FollowRecord
+        ct = ContentType.objects.get_for_model(obj)
+        fr, created = FollowRecord.objects.get_or_create(
+                                                    content_type=ct,
+                                                    object_id=obj.pk,
+                                                    user=user
+                                                )
         return created
     return follow_method
 
@@ -102,9 +100,8 @@ def make_unfollow_method(model):
         """attempts to find an item and delete it, no
         exstence checking
         """
-        bridge_model = get_bridge_model_for_object(obj)
-        objects = bridge_model.objects.get(user = user, object = obj)
-        objects.delete()
+        fr_set = get_follow_records(user, obj)
+        fr_set.delete()
     return unfollow_method
 
 
@@ -133,49 +130,22 @@ def register(model):
         return
     REGISTRY[model_name] = model
 
-    #1) - create a new class FollowX
-    class Meta(object):
-        app_label = 'followit'
-
-    fields = {
-        'user': ForeignKey(
-                    User,
-                    related_name='followed_' + model_name + '_records'
-                ),
-        'object': ForeignKey(
-                    model,
-                    related_name='follower_records'
-                ),
-        '__module__': followit_models.__name__,
-        'Meta': Meta
-    }
-
-
-    #create the bridge model class
-    bridge_class_name = get_bridge_class_name(model)
-    bridge_model = type(bridge_class_name, (django_models.Model,), fields)
-    setattr(followit_models, bridge_class_name, bridge_model)
-
-    #2) patch ``model`` with method ``get_followers()``
+    #1) patch ``model`` with method ``get_followers()``
     model.add_to_class('get_followers', get_object_followers)
 
-    #3) patch ``User`` with method ``get_followed_Xs``
+    #2) patch ``User`` with method ``get_followed_Xs``
     method_name = 'get_followed_' + model_name + 's'
     getter_method = make_followed_objects_getter(model)
     User.add_to_class(method_name, getter_method)
 
-    #4) patch ``User with method ``is_following()``
+    #3) patch ``User with method ``is_following()``
     if not hasattr(User, 'is_following'):
         User.add_to_class('is_following', test_follow_method)
 
-    #5) patch ``User`` with method ``follow_X``
+    #4) patch ``User`` with method ``follow_X``
     follow_method = make_follow_method(model)
     User.add_to_class('follow_' + model_name, follow_method)
 
-    #6) patch ``User`` with method ``unfollow_X``
+    #5) patch ``User`` with method ``unfollow_X``
     unfollow_method = make_unfollow_method(model)
     User.add_to_class('unfollow_' + model_name, unfollow_method)
-
-    #7) reset related objects cache
-    utils.del_related_objects_cache(User)
-    utils.del_related_objects_cache(model)

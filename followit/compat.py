@@ -45,3 +45,5 @@ def get_user_model():
     else:
         from django.contrib.auth.models import User
         return User
+
+USER_MODEL_CLASS_NAME = getattr(settings, 'AUTH_USER_CLASS', 'auth.User')
