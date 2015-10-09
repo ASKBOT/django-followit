@@ -9,6 +9,11 @@ using the ``django.contrib.models.ContentTypes`` system.
 
 Release Notes
 =============
+
+Starting the version ``0.0.10``, `django-followit` supports django 1.7.
+Also starting this version, method `register` must be called from your app's
+`AppConfig.ready()` method.
+
 Starting the version ``0.0.8`` it is not necessary to run ``syncdb`` for this app,
 but instead run the ``migrate`` command.
 
@@ -17,17 +22,17 @@ Setup
 ========
 
 To the INSTALLED_APPS in your ``settings.py`` add entry ``'followit'``.
-Then, in your apps' ``models.py``, probably at the end of the file, add::
-    import followit
-    followit.register(Thing)
-
 Once that is done, in your shell run::
     python manage.py migrate followit
 
-Not it will be possible for the user to follow instances of ``SomeModel``.
+Then, in the body of AppConfig.ready method, add::
+    import followit
+    followit.register(Thing)
+
+Now it will be possible for the user to follow instances of ``SomeModel``.
 
 If you decide to allow following another model, just add another
-``followit.register(...)`` statement to the ``models.py``.
+``followit.register(...)`` statement.
 
 Usage
 ============

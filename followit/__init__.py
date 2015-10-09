@@ -20,9 +20,16 @@ To use this module:
 Copyright 2011 Evgeny Fadeev evgeny.fadeev@gmail.com
 The source code is available under BSD license.
 """
+import django
 from followit import utils
 from followit.compat import get_user_model
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ImproperlyConfigured
+
+if django.VERSION < (1, 7):
+    raise ImproperlyConfigured(
+        'this version of django-followit supports django starting version 1.7'
+    )
 
 REGISTRY = {}
 

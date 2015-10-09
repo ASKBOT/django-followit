@@ -6,6 +6,7 @@ import sys
 setup(
     name="django-followit",
     version='0.0.10',
+    version='0.0.9',
     description='A Django application that allows users to follow django model objects',
     packages=find_packages(),
     author='Evgeny.Fadeev',
@@ -35,6 +36,10 @@ using the ``django.contrib.models.ContentTypes`` system.
 
 Release Notes
 =============
+Starting the version ``0.0.10``, `django-followit` supports django 1.7.
+Also starting this version, method `register` must be called from your app's
+`AppConfig.ready()` method.
+
 Starting the version ``0.0.8`` it is not necessary to run ``syncdb`` for this app,
 but instead run the ``migrate`` command.
 
@@ -44,14 +49,14 @@ Setup
 To the INSTALLED_APPS in your ``settings.py`` add entry ``'followit'``.
 Run `python manage.py migrate followit`
 
-Then, in your apps' ``models.py``, probably at the end of the file, add::
+Then, in the body of `AppConfig.ready` method, add::
     import followit
     followit.register(Thing)
 
 Not it will be possible for the user to follow instances of ``SomeModel``.
 
 If you decide to allow following another model, just add another
-``followit.register(...)`` statement to the ``models.py``.
+``followit.register(...)`` statement.
 
 Usage
 ============
