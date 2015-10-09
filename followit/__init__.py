@@ -27,9 +27,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ImproperlyConfigured
 
 if django.VERSION < (1, 7):
-    raise ImproperlyConfigured(
-        'this version of django-followit supports django starting version 1.7'
-    )
+    msg = """This version of django-followit supports django starting version 1.7.
+For the current version of django django-followit 0.0.9 can be used"""
+    raise ImproperlyConfigured(msg)
 
 REGISTRY = {}
 
