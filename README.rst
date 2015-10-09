@@ -4,7 +4,14 @@
 
 The ``followit`` django app allows to easily set up a
 capability for the site users to follow various things on the site,
-represented by django model objects.
+represented by django model ``followit.models.FollowRecord`` 
+using the ``django.contrib.models.ContentTypes`` system.
+
+Release Notes
+=============
+Starting the version ``0.0.8`` it is not necessary to run ``syncdb`` for this app,
+but instead run the ``migrate`` command.
+
 
 Setup
 ========
@@ -15,12 +22,12 @@ Then, in your apps' ``models.py``, probably at the end of the file, add::
     followit.register(Thing)
 
 Once that is done, in your shell run::
-    python manage.py syncdb
+    python manage.py migrate followit
 
 Not it will be possible for the user to follow instances of ``SomeModel``.
 
 If you decide to allow following another model, just add another
-``followit.register(...)`` statement to the ``models.py`` and re-run the ``syncdb``.
+``followit.register(...)`` statement to the ``models.py``.
 
 Usage
 ============
