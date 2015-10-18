@@ -5,8 +5,7 @@ import sys
 
 setup(
     name="django-followit",
-    version='0.0.10',
-    version='0.0.9',
+    version='0.1.0',
     description='A Django application that allows users to follow django model objects',
     packages=find_packages(),
     author='Evgeny.Fadeev',
@@ -36,7 +35,7 @@ using the ``django.contrib.models.ContentTypes`` system.
 
 Release Notes
 =============
-Starting the version ``0.0.10``, `django-followit` supports django 1.7.
+Starting the version ``0.1.0``, `django-followit` supports django 1.7.
 Also starting this version, method `register` must be called from your app's
 `AppConfig.ready()` method.
 

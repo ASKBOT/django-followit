@@ -10,7 +10,7 @@ using the ``django.contrib.models.ContentTypes`` system.
 Release Notes
 =============
 
-Starting the version ``0.0.10``, `django-followit` supports django 1.7.
+Starting the version ``0.1.0``, `django-followit` supports django 1.7.
 Also starting this version, method `register` must be called from your app's
 `AppConfig.ready()` method.
 
