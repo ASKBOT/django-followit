@@ -26,15 +26,19 @@ from followit.compat import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ImproperlyConfigured
 
-if django.VERSION < (1, 7):
-    msg = """This version of django-followit supports django starting version 1.7.
-For the current version of django django-followit 0.0.9 can be used"""
+if django.VERSION < (1, 7) or django.VERSION >= (1, 9):
+    msg = """This version of django-followit supports django 1.7 and 1.8.
+For earlier versions of django django-followit 0.0.9 can be used"""
     raise ImproperlyConfigured(msg)
 
 REGISTRY = {}
 
+
 def get_model_name(model):
-    return model._meta.module_name
+    try:
+        return model._meta.module_name
+    except AttributeError:
+        return model._meta.model_name
 
 
 def get_follow_records(user, obj):
@@ -45,6 +49,7 @@ def get_follow_records(user, obj):
                                 object_id=obj.pk,
                                 user=user
                             )
+
 
 def get_object_followers(obj):
     """returns query set of users following the object"""
