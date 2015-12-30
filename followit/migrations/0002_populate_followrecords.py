@@ -3,7 +3,6 @@ from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import DataMigration
 from django.db import models, connection
-from django.contrib.contenttypes.models import ContentType
 
 def table_exists(table_name):
     return table_name in connection.introspection.table_names()
@@ -14,7 +13,11 @@ def get_followit_table_name(name):
 
 
 def copy_followit_records(name, model_class, orm):
-    content_type = ContentType.objects.get_for_model(model_class)
+    ctype_kwargs = {
+        'name': model_class._meta.module_name,
+        'app_label': model_class._meta.app_label
+    }
+    content_type = orm['contenttypes.ContentType'].objects.get(**ctype_kwargs)
     cursor = connection.cursor()
     table_name = get_followit_table_name(name)
     cursor.execute('select user_id, object_id from %s' % table_name)
