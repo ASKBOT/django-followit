@@ -1,26 +1,27 @@
-.. image:: https://travis-ci.org/vinodpandey/django-followit.png?branch=master
-    :alt: Build Status
-    :align: left
-
 The ``followit`` django app allows to easily set up a
 capability for the site users to follow various things on the site,
-represented by django model objects.
+represented by django model ``followit.models.FollowRecord`` 
+using the ``django.contrib.models.ContentTypes`` system.
+
+Release Notes
+=============
+Starting the version ``0.0.8`` it is not necessary to run ``syncdb`` for this app,
+but instead run the ``migrate`` command.
 
 Setup
 ========
 
 To the INSTALLED_APPS in your ``settings.py`` add entry ``'followit'``.
+Run `python manage.py migrate followit`
+
 Then, in your apps' ``models.py``, probably at the end of the file, add::
     import followit
     followit.register(Thing)
 
-Once that is done, in your shell run::
-    python manage.py syncdb
-
 Not it will be possible for the user to follow instances of ``SomeModel``.
 
 If you decide to allow following another model, just add another
-``followit.register(...)`` statement to the ``models.py`` and re-run the ``syncdb``.
+``followit.register(...)`` statement to the ``models.py``.
 
 Usage
 ============
@@ -34,15 +35,13 @@ is registered with ``followit`` in your ``models.py``::
 
 Available urls from the `followit/urls.py`::
     /follow/<model_name>/<item_id>/
-
     {% url follow_object "somemodel" item_id %} #model name lower case
 
     /unfollow/<model_name>/<item_id>/
-
     {% url unfollow_object "somemodel" item_id %} #lower case model name
 
     /toggle-follow/<model_name>/<item_id>/
-
     {% url toggle_follow_object "somemodel" item_id %} #lower case model name
+
 
 ``followit`` does not yet provide template tags.
