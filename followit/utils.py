@@ -37,7 +37,7 @@ def followit_ajax_view(view_func):
         except Exception, e:
             data = {'status': 'error', 'error_message': unicode(e)}
 
-        return HttpResponse(simplejson.dumps(data), mimetype = 'application/json')
+        return HttpResponse(simplejson.dumps(data), content_type='application/json')
     return wrapped_view
 
 def post_only(view_func):
