@@ -23,11 +23,10 @@ The source code is available under BSD license.
 import django
 from followit import utils
 from followit.compat import get_user_model
-from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ImproperlyConfigured
 
-if django.VERSION < (1, 7) or django.VERSION >= (1, 9):
-    msg = """This version of django-followit supports django 1.7 and 1.8.
+if django.VERSION < (1, 7) or django.VERSION >= (1, 12):
+    msg = """This version of django-followit supports django 1.7 through 1.11.
 For earlier versions of django django-followit 0.0.9 can be used"""
     raise ImproperlyConfigured(msg)
 
@@ -42,6 +41,7 @@ def get_model_name(model):
 
 
 def get_follow_records(user, obj):
+    from django.contrib.contenttypes.models import ContentType
     from followit.models import FollowRecord
     ct = ContentType.objects.get_for_model(obj)
     return FollowRecord.objects.filter(
@@ -53,6 +53,7 @@ def get_follow_records(user, obj):
 
 def get_object_followers(obj):
     """returns query set of users following the object"""
+    from django.contrib.contenttypes.models import ContentType
     from followit.models import FollowRecord
     ct = ContentType.objects.get_for_model(obj)
     fr_set = FollowRecord.objects.filter(content_type=ct, object_id=obj.pk)
@@ -68,6 +69,7 @@ def make_followed_objects_getter(model):
     #something like followX_set__user
     def followed_objects_getter(user):
         from followit.models import FollowRecord
+        from django.contrib.contenttypes.models import ContentType
         ct = ContentType.objects.get_for_model(model)
         fr_set = FollowRecord.objects.filter(
                                 content_type=ct,
@@ -95,6 +97,7 @@ def make_follow_method(model):
     def follow_method(user, obj):
         """returns ``True`` if follow operation created a new record"""
         from followit.models import FollowRecord
+        from django.contrib.contenttypes.models import ContentType
         ct = ContentType.objects.get_for_model(obj)
         fr, created = FollowRecord.objects.get_or_create(
                                                     content_type=ct,

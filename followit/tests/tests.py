@@ -3,6 +3,7 @@ Test cases for the follower module
 """
 from django.test import TestCase
 from followit.compat import get_user_model
+import followit
 
 class FollowerTests(TestCase):
     def setUp(self):
@@ -10,6 +11,7 @@ class FollowerTests(TestCase):
         self.u1 = User.objects.create_user('user1', 'user1@example.com')
         self.u2 = User.objects.create_user('user2', 'user2@example.com')
         self.u3 = User.objects.create_user('user3', 'user3@example.com')
+        followit.register(User)
 
     def test_multiple_follow(self):
         
@@ -17,17 +19,17 @@ class FollowerTests(TestCase):
         self.u1.follow_user(self.u3)
         self.u2.follow_user(self.u1)
 
-        self.assertEquals(
+        self.assertEqual(
             set(self.u1.get_followers()),
             set([self.u2])
         )
 
-        self.assertEquals(
+        self.assertEqual(
             set(self.u2.get_followers()),
             set([self.u1])
         )
 
-        self.assertEquals(
+        self.assertEqual(
             set(self.u1.get_followed_users()),
             set([self.u2, self.u3])
         )
@@ -35,7 +37,7 @@ class FollowerTests(TestCase):
     def test_unfollow(self):
         self.u1.follow_user(self.u2)
         self.u1.unfollow_user(self.u2)
-        self.assertEquals(self.u1.get_followed_users().count(), 0)
+        self.assertEqual(self.u1.get_followed_users().count(), 0)
 
     def test_is_following(self):
         self.u2.follow_user(self.u1)
