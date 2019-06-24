@@ -1,19 +1,21 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-urlpatterns = patterns('',
+from . import views as FollowitViews
+
+urlpatterns = [
     url(
         r'^follow/(?P<model_name>\w+)/(?P<object_id>\d+)/$',
-        'followit.views.follow_object',
+        FollowitViews.follow_object,
         name = 'follow_object'
     ),
     url(
         r'^unfollow/(?P<model_name>\w+)/(?P<object_id>\d+)/$',
-        'followit.views.unfollow_object',
+        FollowitViews.unfollow_object,
         name = 'unfollow_object'
     ),
     url(
         r'^toggle-follow/(?P<model_name>\w+)/(?P<object_id>\d+)/$',
-        'followit.views.toggle_follow_object',
+        FollowitViews.toggle_follow_object,
         name='toggle_follow_object'
     )
-)
+]
