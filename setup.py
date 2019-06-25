@@ -35,6 +35,8 @@ using the ``django.contrib.models.ContentTypes`` system.
 
 Release Notes
 =============
+Starting the version ``0.3.0``, supports django 1.11 (1.9 and 1.10 are not tested)
+
 Starting the version ``0.2.0``, django-followit supports django 1.8.
 
 Starting the version ``0.1.0``, `django-followit` supports django 1.7.

@@ -26,7 +26,7 @@ from followit.compat import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 
 if django.VERSION < (1, 7) or django.VERSION >= (1, 12):
-    msg = """This version of django-followit supports django 1.7 through 1.11.
+    msg = """This version of django-followit supports django 1.11, earlier versions are not tested.
 For earlier versions of django django-followit 0.0.9 can be used"""
     raise ImproperlyConfigured(msg)
 
