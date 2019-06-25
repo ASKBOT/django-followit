@@ -2,6 +2,8 @@ from django.conf.urls import url
 
 from . import views as FollowitViews
 
+app_name = 'followit'
+
 urlpatterns = [
     url(
         r'^follow/(?P<model_name>\w+)/(?P<object_id>\d+)/$',
