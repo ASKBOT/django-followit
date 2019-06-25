@@ -34,8 +34,8 @@ def followit_ajax_view(view_func):
             assert(request.method == 'POST')
             assert(request.is_ajax())
             data = view_func(request, model_name, object_id)
-        except Exception, e:
-            data = {'status': 'error', 'error_message': unicode(e)}
+        except Exception as e:
+            data = {'status': 'error', 'error_message': str(e)}
 
         return HttpResponse(simplejson.dumps(data), content_type='application/json')
     return wrapped_view
