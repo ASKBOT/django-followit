@@ -5,7 +5,7 @@ import sys
 
 setup(
     name="django-followit",
-    version='0.3.0',
+    version='0.4.0',
     description='A Django application that allows users to follow django model objects',
     packages=find_packages(),
     author='Evgeny.Fadeev',
@@ -22,9 +22,9 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.4',
-        'Programming Language :: Python :: 2.5',
-        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: JavaScript',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
     ],
@@ -35,6 +35,10 @@ using the ``django.contrib.models.ContentTypes`` system.
 
 Release Notes
 =============
+Starting the version ``0.4.0``, django-followit supports django 2.0.
+
+Starting the version ``0.3.0``, django-followit supports django 1.11.
+
 Starting the version ``0.2.0``, django-followit supports django 1.8.
 
 Starting the version ``0.1.0``, `django-followit` supports django 1.7.
