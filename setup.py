@@ -47,7 +47,7 @@ Starting the version ``0.0.8`` it is not necessary to run ``syncdb`` for this ap
 but instead run the ``migrate`` command.
 
 Setup
-========
+=====
 
 To the INSTALLED_APPS in your ``settings.py`` add entry ``'followit'``.
 Run `python manage.py migrate followit`
@@ -62,10 +62,9 @@ If you decide to allow following another model, just add another
 ``followit.register(...)`` statement.
 
 Usage
-============
+=====
 
-Examples below show how to use ``followit`` (assuming that model ``Thing``
-is registered with ``followit`` in your ``models.py``::
+Examples below show how to use ``followit``::
     bob.follow_thing(x)
     bob.unfollow_thing(x)
     things = bob.get_followed_things()

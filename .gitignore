@@ -1,4 +1,5 @@
 *.pyc
 env/
 dist/
+build/
 django_followit.egg-info/
