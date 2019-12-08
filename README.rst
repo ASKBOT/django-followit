@@ -28,6 +28,7 @@ To the INSTALLED_APPS in your ``settings.py`` add entry ``'followit'``.
 Run `python manage.py migrate followit`
 
 Then, in the body of `AppConfig.ready` method, add::
+
     import followit
     followit.register(Thing)
 
@@ -40,12 +41,14 @@ Usage
 =====
 
 Examples below show how to use ``followit``::
+
     bob.follow_thing(x)
     bob.unfollow_thing(x)
     things = bob.get_followed_things()
     x_followers = x.get_followers()
 
 Available urls from the `followit/urls.py`::
+
     /follow/<model_name>/<item_id>/
     {% url follow_object "somemodel" item_id %} #model name lower case
 
