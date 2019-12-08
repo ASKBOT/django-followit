@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.dirname(RUNTESTS_DIR))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'followit.tests.settings'
 try:
     django.setup()
-except:
+except: # for django 1.7
     pass
 
 from followit.tests import settings

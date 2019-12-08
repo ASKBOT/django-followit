@@ -17,19 +17,25 @@ To use this module:
     user.get_followed_things() #note that "things" is from the name of class Thing
     some_thing.get_followers()
 
-Copyright 2011 Evgeny Fadeev evgeny.fadeev@gmail.com
+Copyright 2011-2019 Evgeny Fadeev evgeny.fadeev@gmail.com
 The source code is available under BSD license.
 """
 import django
+import sys
 from django.core.exceptions import ImproperlyConfigured
 
-if django.VERSION < (2, 0) or django.VERSION >= (4, 0):
-    msg = "\n\nThis version of django-followit supports Django 2 and 3 and Python 3."
-
-    if django.VERSION < (2, 0):
-        msg += """\nFor django 1.7 - 1.11 try version 0.3.x
-For earlier versions see "long_description" section of the setup.py
+if django.VERSION[:2] == (1, 7) and sys.version_info.major == 3:
+    msg = """\n\nThis version of django-followit does not Django 1.7 with Python 3
+Either use Python 2.7 or upgrade Django to version from 1.8 up to 3.
 """
+    raise ImproperlyConfigured(msg)
+
+if django.VERSION < (1, 7) or django.VERSION >= (4, 0):
+    msg = "\n\nThis version of django-followit supports Django 1.7 - 3."
+
+    if django.VERSION < (1, 7):
+        msg += "\nFor earlier Django versions try django-followit 0.0.9"
+
     raise ImproperlyConfigured(msg)
 
 from followit import utils

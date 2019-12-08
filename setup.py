@@ -13,7 +13,6 @@ setup(
     keywords='follow, database, django',
     url='https://github.com/ASKBOT/django-followit',
     include_package_data=True,
-    install_requires=['simplejson',],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
@@ -21,6 +20,7 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: JavaScript',
@@ -39,11 +39,13 @@ For a given version of Django first two digits will not change.
 The last digits indicates the bugfix releases. Below the .x
 in the version should be replaced with the highest available digit::
 
-  * ``0.4.x`` support django versions 2 and 3, only Python 3.
+  * ``0.4.x`` supports django versions from 1.7(**) up to 3. Python 2 and 3.
   * ``0.3.x`` - django 1.9 - 1.11
   * ``0.2.x`` - django 1.8
   * ``0.1.x`` - django 1.7
   * ``0.0.9`` can be used for the earlier versions
+
+(**) versions ``0.4.x`` do not support Django 1.7 with Python 3.
 
 Starting the version 0.1.0 , method `register` must be called from your app's
 `AppConfig.ready()` method.
