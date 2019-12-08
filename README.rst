@@ -59,6 +59,3 @@ available urls ``followit/urls.py``::
 
     /toggle-follow/<model_name>/<item_id>/
     {% url toggle_follow_object "somemodel" item_id %} #lower case model name
-
-
-``followit`` does not provide template tags.
