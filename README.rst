@@ -1,6 +1,4 @@
-.. image:: https://travis-ci.org/vinodpandey/django-followit.png?branch=master
-    :alt: Build Status
-    :align: left
+.. image:: https://travis-ci.org/vinodpandey/django-followit.png?branch=master :alt: Build Status :align: left
 
 The ``followit`` django app allows for the site users
 to follow various instances of Django models,
