@@ -25,6 +25,7 @@ Setup
 =====
 
 To the INSTALLED_APPS in your ``settings.py`` add entry ``'followit'``.
+
 Run `python manage.py migrate followit`
 
 Then, in the body of `AppConfig.ready` method, add::
@@ -47,7 +48,8 @@ Examples below show how to use ``followit``::
     things = bob.get_followed_things()
     x_followers = x.get_followers()
 
-Available urls from the `followit/urls.py`::
+To follow/unfollow items via the HTTTP, make AJAX post requests at urls,
+available urls ``followit/urls.py``::
 
     /follow/<model_name>/<item_id>/
     {% url follow_object "somemodel" item_id %} #model name lower case
@@ -59,4 +61,4 @@ Available urls from the `followit/urls.py`::
     {% url toggle_follow_object "somemodel" item_id %} #lower case model name
 
 
-``followit`` does not yet provide template tags.
+``followit`` does not provide template tags.
