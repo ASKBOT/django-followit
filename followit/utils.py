@@ -1,7 +1,7 @@
 """utility functions used by the :mod:`followit`
 """
 import functools
-import simplejson
+import json
 from django.http import HttpResponse
 import followit
 
@@ -37,7 +37,7 @@ def followit_ajax_view(view_func):
         except Exception as e:
             data = {'status': 'error', 'error_message': str(e)}
 
-        return HttpResponse(simplejson.dumps(data), content_type='application/json')
+        return HttpResponse(json.dumps(data), content_type='application/json')
     return wrapped_view
 
 def post_only(view_func):

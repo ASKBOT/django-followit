@@ -21,14 +21,19 @@ Copyright 2011 Evgeny Fadeev evgeny.fadeev@gmail.com
 The source code is available under BSD license.
 """
 import django
-from followit import utils
-from followit.compat import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 
-if django.VERSION < (1, 7) or django.VERSION >= (1, 12):
-    msg = """This version of django-followit supports django 1.11, earlier versions are not tested.
-For earlier versions of django django-followit 0.0.9 can be used"""
+if django.VERSION < (2, 0) or django.VERSION >= (4, 0):
+    msg = "\n\nThis version of django-followit supports Django 2 and 3 and Python 3."
+
+    if django.VERSION < (2, 0):
+        msg += """\nFor django 1.7 - 1.11 try version 0.3.x
+For earlier versions see "long_description" section of the setup.py
+"""
     raise ImproperlyConfigured(msg)
+
+from followit import utils
+from followit.compat import get_user_model
 
 REGISTRY = {}
 

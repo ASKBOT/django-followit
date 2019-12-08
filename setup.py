@@ -1,11 +1,10 @@
+from setuptools import setup, find_packages
 import ez_setup
 ez_setup.use_setuptools()
-from setuptools import setup, find_packages
-import sys
 
 setup(
     name="django-followit",
-    version='0.3.0',
+    version='0.4.0',
     description='A Django application that allows users to follow django model objects',
     packages=find_packages(),
     author='Evgeny.Fadeev',
@@ -22,9 +21,8 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.4',
-        'Programming Language :: Python :: 2.5',
-        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: JavaScript',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
     ],
@@ -35,16 +33,20 @@ using the ``django.contrib.models.ContentTypes`` system.
 
 Release Notes
 =============
-Starting the version ``0.3.0``, supports django 1.11 (1.9 and 1.10 are not tested)
 
-Starting the version ``0.2.0``, django-followit supports django 1.8.
+Django version support is encoded in the version of the package.
+For a given version of Django first two digits will not change.
+The last digits indicates the bugfix releases. Below the .x
+in the version should be replaced with the highest available digit::
 
-Starting the version ``0.1.0``, `django-followit` supports django 1.7.
-Also starting this version, method `register` must be called from your app's
+  * ``0.4.x`` support django versions 2 and 3, only Python 3.
+  * ``0.3.x`` - django 1.9 - 1.11
+  * ``0.2.x`` - django 1.8
+  * ``0.1.x`` - django 1.7
+  * ``0.0.9`` can be used for the earlier versions
+
+Starting the version 0.1.0 , method `register` must be called from your app's
 `AppConfig.ready()` method.
-
-Starting the version ``0.0.8`` it is not necessary to run ``syncdb`` for this app,
-but instead run the ``migrate`` command.
 
 Setup
 =====
