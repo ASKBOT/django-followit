@@ -4,7 +4,7 @@ ez_setup.use_setuptools()
 
 setup(
     name="django-followit",
-    version='0.4.0',
+    version='0.4.1',
     description='A Django application that allows users to follow django model objects',
     packages=find_packages(),
     author='Evgeny.Fadeev',
@@ -26,6 +26,6 @@ setup(
         'Programming Language :: JavaScript',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
     ],
-    long_description=open('README.rst', 'r').read(),
+    long_description=''.join(open('README.rst', 'r').readlines()[4:]),
     long_description_content_type='text/x-rst'
 )
