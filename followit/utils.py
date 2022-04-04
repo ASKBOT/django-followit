@@ -30,7 +30,7 @@ def followit_ajax_view(view_func):
     def wrapped_view(request, model_name = None, object_id = None):
         try:
             assert(model_name in followit.REGISTRY)
-            assert(request.user.is_authenticated())
+            assert(request.user.is_authenticated)
             assert(request.method == 'POST')
             assert(request.is_ajax())
             data = view_func(request, model_name, object_id)

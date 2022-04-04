@@ -13,7 +13,8 @@ Release Notes
 The list below shows compatibility of `django-followit` with versions of Django and Python.
 Python version compatibility was thoroughly tested only with release `0.4.0`::
 
-  * ``0.4.x`` supports django versions from 1.7(**) up to 3. Python 2 and 3.
+  * ``0.5.x`` supports django versions 1.10 and up.
+  * ``0.4.x`` django 1.7(**) - 1.9. Python 2 and 3.
   * ``0.3.x`` - django 1.9 - 1.11
   * ``0.2.x`` - django 1.8
   * ``0.1.x`` - django 1.7

@@ -4,7 +4,7 @@ ez_setup.use_setuptools()
 
 setup(
     name="django-followit",
-    version='0.4.1',
+    version='0.5.0',
     description='A Django application that allows users to follow django model objects',
     packages=find_packages(),
     author='Evgeny.Fadeev',
