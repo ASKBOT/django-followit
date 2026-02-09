@@ -1,10 +1,8 @@
 from setuptools import setup, find_packages
-import ez_setup
-ez_setup.use_setuptools()
 
 setup(
     name="django-followit",
-    version='0.5.0',
+    version='0.7.0',
     description='A Django application that allows users to follow django model objects',
     packages=find_packages(),
     author='Evgeny.Fadeev',
@@ -20,10 +18,8 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: JavaScript',
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
     ],
     long_description=''.join(open('README.rst', 'r').readlines()[4:]),

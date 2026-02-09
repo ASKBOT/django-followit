@@ -31,19 +31,11 @@ import django
 
 __all__ = ['get_user_model',]
 
-# Django 1.5+ compatibility
 def get_user_model():
-    if django.VERSION >= (1, 5):
-        try:
-            from django.contrib import auth
-            return auth.get_user_model()
-        except ImproperlyConfigured:
-            # The the users model might not be read yet.
-            # This can happen is when setting up the create_api_key signal, in your
-            # custom user module.
-            return None
-    else:
-        from django.contrib.auth.models import User
-        return User
+    try:
+        from django.contrib import auth
+        return auth.get_user_model()
+    except ImproperlyConfigured:
+        return None
 
 USER_MODEL_CLASS_NAME = getattr(settings, 'AUTH_USER_CLASS', 'auth.User')
