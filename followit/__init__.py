@@ -20,12 +20,36 @@ To use this module:
 Copyright 2011-2019 Evgeny Fadeev evgeny.fadeev@gmail.com
 The source code is available under BSD license.
 """
+import sys
 import django
 from django.core.exceptions import ImproperlyConfigured
 
-if django.VERSION < (4, 2) or django.VERSION >= (7, 0):
-    msg = "\n\nThis version of django-followit supports Django 4.2 - 6.x."
-    raise ImproperlyConfigured(msg)
+py_version = sys.version_info[:2]
+dj_version = django.VERSION[:2]
+
+if py_version < (3, 8) or py_version >= (3, 15):
+    raise ImproperlyConfigured(
+        "\n\ndjango-followit requires Python 3.8 - 3.14."
+    )
+
+if dj_version < (4, 2) or dj_version >= (7, 0):
+    raise ImproperlyConfigured(
+        "\n\ndjango-followit requires Django 4.2 - 6.x."
+    )
+
+# Django 5.x requires Python 3.10+
+if dj_version >= (5, 0) and py_version < (3, 10):
+    raise ImproperlyConfigured(
+        "\n\nDjango {}.{} requires Python 3.10+, "
+        "you have Python {}.{}.".format(*dj_version, *py_version)
+    )
+
+# Django 6.x requires Python 3.12+
+if dj_version >= (6, 0) and py_version < (3, 12):
+    raise ImproperlyConfigured(
+        "\n\nDjango {}.{} requires Python 3.12+, "
+        "you have Python {}.{}.".format(*dj_version, *py_version)
+    )
 
 from followit import utils
 from followit.compat import get_user_model

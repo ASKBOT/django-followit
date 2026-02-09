@@ -1,6 +1,6 @@
-.. image:: https://travis-ci.org/vinodpandey/django-followit.png?branch=master
-        :alt: Build Status
-        :align: left
+.. image:: https://github.com/ASKBOT/django-followit/actions/workflows/tests.yml/badge.svg?branch=master
+        :target: https://github.com/ASKBOT/django-followit/actions/workflows/tests.yml
+        :alt: Tests
 
 The ``followit`` django app allows for the site users
 to follow various instances of Django models,
@@ -10,8 +10,33 @@ using the ``django.contrib.models.ContentTypes`` system.
 Release Notes
 =============
 
-The list below shows compatibility of `django-followit` with versions of Django and Python.
-Python version compatibility was thoroughly tested only with release `0.4.0`::
+Version 0.7.x
+-------------
+
+Supports Python 3.8 - 3.14 and Django 4.2 - 6.0.
+
++------------+------------+------------+------------+
+| Python     | Django 4.2 | Django 5.2 | Django 6.0 |
++============+============+============+============+
+| 3.8        | Yes        |            |            |
++------------+------------+------------+------------+
+| 3.9        | Yes        |            |            |
++------------+------------+------------+------------+
+| 3.10       | Yes        | Yes        |            |
++------------+------------+------------+------------+
+| 3.11       | Yes        | Yes        |            |
++------------+------------+------------+------------+
+| 3.12       | Yes        | Yes        | Yes        |
++------------+------------+------------+------------+
+| 3.13       | Yes        | Yes        | Yes        |
++------------+------------+------------+------------+
+| 3.14       | Yes        | Yes        | Yes        |
++------------+------------+------------+------------+
+
+Earlier versions
+----------------
+
+::
 
   * ``0.6.x`` supports Django 1.10 to 4.x
   * ``0.5.x`` supports Django versions 1.10 up to 3.2
